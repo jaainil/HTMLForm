@@ -21,7 +21,6 @@ document.getElementById("invoiceForm").addEventListener("submit", function (e) {
     invoiceNumber: document.getElementById("invoiceNumber").value,
     registrationDate: document.getElementById("registrationDate").value,
     totalAmount: document.getElementById("totalAmount").value,
-    sponsorship: document.getElementById("sponsorship").value,
   };
 
   // Generate PDF
@@ -168,26 +167,6 @@ function generateNavratriRegistrationPDF(data) {
 
   // Calculate starting Y position for next section
   let currentY = 170;
-
-  // Sponsorship section - ONLY if sponsorship is provided
-  if (data.sponsorship && data.sponsorship.trim() !== "") {
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(
-      navratriColors.green[0],
-      navratriColors.green[1],
-      navratriColors.green[2]
-    );
-    doc.text("Sponsorship/Support:", 25, currentY);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(0, 0, 0);
-
-    const splitSponsorship = doc.splitTextToSize(data.sponsorship, 160);
-    doc.text(splitSponsorship, 25, currentY + 10);
-
-    currentY = currentY + 10 + splitSponsorship.length * 10 + 20;
-  } else {
-    currentY = 180;
-  }
 
   // Total amount with decorative box
   const totalY = currentY;
