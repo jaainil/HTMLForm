@@ -1,31 +1,87 @@
-document.getElementById("invoiceForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+document
+  .getElementById("invoiceForm")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  // Check if terms and conditions are accepted
-  const termsAccepted = document.getElementById("termsAccepted").checked;
+    // Check if terms and conditions are accepted
+    const termsAccepted = document.getElementById("termsAccepted").checked;
 
-  if (!termsAccepted) {
-    alert(
-      "⚠️ Please accept the terms and conditions to proceed with registration."
-    );
-    return;
-  }
+    if (!termsAccepted) {
+      alert(
+        "⚠️ Please accept the terms and conditions to proceed with registration."
+      );
+      return;
+    }
 
-  // Get form data
-  const formData = {
-    fullName: document.getElementById("fullName").value,
-    phoneNumber: document.getElementById("phoneNumber").value,
-    totalPersons: document.getElementById("totalPersons").value,
-    address: document.getElementById("address").value,
-    email: document.getElementById("email").value,
-    invoiceNumber: document.getElementById("invoiceNumber").value,
-    registrationDate: document.getElementById("registrationDate").value,
-    totalAmount: document.getElementById("totalAmount").value,
-  };
+    // Show loading state
+    const submitButton = document.querySelector(".navratri-btn");
+    const originalButtonText = submitButton.innerHTML;
+    submitButton.innerHTML =
+      '<span class="btn-text">🔄 Processing Registration...</span>';
+    submitButton.disabled = true;
 
-  // Generate PDF
-  generateNavratriRegistrationPDF(formData);
-});
+    // Get form data
+    const formData = {
+      fullName: document.getElementById("fullName").value,
+      phoneNumber: document.getElementById("phoneNumber").value,
+      totalPersons: document.getElementById("totalPersons").value,
+      address: document.getElementById("address").value,
+      email: document.getElementById("email").value,
+      invoiceNumber: document.getElementById("invoiceNumber").value,
+      registrationDate: document.getElementById("registrationDate").value,
+      totalAmount: document.getElementById("totalAmount").value,
+    };
+
+    try {
+      // Test NocoDB connection first
+      console.log("🔍 Testing NocoDB connection before submission...");
+      const connectionTest = await testNocoDBConnection();
+
+      if (!connectionTest) {
+        console.warn(
+          "⚠️ NocoDB connection test failed, proceeding with PDF only"
+        );
+        showNavratriErrorMessage(
+          "⚠️ Database connection failed. Registration saved locally and PDF generated."
+        );
+        generateNavratriRegistrationPDF(formData);
+        return;
+      }
+
+      // Submit data to NocoDB first
+      console.log("📤 Submitting data to NocoDB...");
+      const nocoResult = await submitToNocoDB(formData);
+
+      if (nocoResult.success) {
+        console.log("✅ NocoDB submission successful!");
+        // Generate PDF only if NocoDB submission is successful
+        generateNavratriRegistrationPDF(formData);
+
+        // Show success message
+        showNavratriSuccessMessage(
+          "✅ Registration successful! Data saved to database and PDF generated."
+        );
+      } else {
+        console.error("❌ NocoDB submission failed:", nocoResult.error);
+        // Show error message but still generate PDF
+        showNavratriErrorMessage(
+          `⚠️ Database save failed: ${nocoResult.error}. PDF generated successfully.`
+        );
+        generateNavratriRegistrationPDF(formData);
+      }
+    } catch (error) {
+      console.error("💥 Registration error:", error);
+      // Show error message but still generate PDF
+      showNavratriErrorMessage(
+        `⚠️ Registration error: ${error.message}. PDF generated successfully.`
+      );
+      generateNavratriRegistrationPDF(formData);
+    } finally {
+      // Restore button state
+      submitButton.innerHTML = originalButtonText;
+      submitButton.disabled = false;
+    }
+  });
 
 // Calculate total amount based on number of persons
 function calculateTotalAmount() {
@@ -246,6 +302,135 @@ function generateNavratriRegistrationPDF(data) {
   showNavratriSuccessMessage("નવરાત્રી રજીસ્ટ્રેશન રસીદ સફળતાપૂર્વક બની ગઈ!");
 }
 
+// NocoDB Configuration
+const NOCODB_CONFIG = {
+  baseUrl: "https://nocodb.algogist.com/api/v2",
+  tableId: "mzse7xth1iba4ll",
+  apiToken: "x46goXSDlBeSCSg98F9XcyF9k_2JTsRdUyh_BnpR",
+  viewId: "vwvrz46hp9lkqx4r",
+};
+
+// Function to submit data to NocoDB
+async function submitToNocoDB(formData) {
+  console.log("🔄 Attempting to submit data to NocoDB...");
+  console.log("📊 Form data to submit:", formData);
+
+  try {
+    // Use the correct field IDs from your NocoDB table
+    const nocoData = {
+      c05eqcynx057p0w: formData.fullName, // Full Name
+      c930pe5xqlmciqi: formData.phoneNumber, // Phone Number
+      c2oz9pyj7hjrwzv: parseInt(formData.totalPersons), // Total Participants
+      coivwzyss4r41y5: formData.address || "", // Address
+      cge82jeezj4fkd0: formData.email || "", // Email
+      cuyo9tcmslimp4i: formData.registrationDate, // Registration Date
+      c2w0421697ohkv6: parseInt(formData.totalAmount), // Total Amount
+    };
+
+    // Add registration number if you have a field for it
+    // You'll need to provide the field ID for registration number
+    // nocoData["REGISTRATION_NUMBER_FIELD_ID"] = formData.invoiceNumber;
+
+    console.log("📤 Sending to NocoDB with field IDs:", nocoData);
+    console.log(
+      "🔗 API URL:",
+      `${NOCODB_CONFIG.baseUrl}/tables/${NOCODB_CONFIG.tableId}/records`
+    );
+
+    const response = await axios({
+      method: "POST",
+      url: `${NOCODB_CONFIG.baseUrl}/tables/${NOCODB_CONFIG.tableId}/records`,
+      headers: {
+        "xc-token": NOCODB_CONFIG.apiToken,
+        "Content-Type": "application/json",
+      },
+      data: nocoData,
+    });
+
+    console.log("✅ Data saved to NocoDB successfully:", response.data);
+    console.log("📋 Response status:", response.status);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("❌ Error saving to NocoDB:", error);
+    console.error("📄 Error details:", {
+      message: error.message,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data,
+      config: {
+        url: error.config?.url,
+        method: error.config?.method,
+        headers: error.config?.headers,
+      },
+    });
+    return {
+      success: false,
+      error: error.message,
+      details: error.response?.data,
+    };
+  }
+}
+
+// Function to get all field IDs from NocoDB table
+async function getAllFieldIds() {
+  try {
+    console.log("🔍 Fetching table schema to get all field IDs...");
+    
+    // Get table info including field details - using the correct API endpoint
+    const response = await axios({
+      method: "GET",
+      url: `${NOCODB_CONFIG.baseUrl}/meta/tables/${NOCODB_CONFIG.tableId}`,
+      headers: {
+        "xc-token": NOCODB_CONFIG.apiToken,
+      }
+    });
+
+    console.log("📋 Table schema response:", response.data);
+    
+    if (response.data && response.data.columns) {
+      console.log("📊 All Field IDs and Names:");
+      response.data.columns.forEach(column => {
+        console.log(`${column.title}: ${column.id}`);
+      });
+      return response.data.columns;
+    }
+    
+    return null;
+  } catch (error) {
+    console.error("❌ Error fetching field IDs:", error);
+    console.log("💡 This doesn't affect data submission - it's just for debugging field mapping");
+    return null;
+  }
+}
+
+// Function to test NocoDB connection
+async function testNocoDBConnection() {
+  console.log("🧪 Testing NocoDB connection...");
+  try {
+    const response = await axios({
+      method: "GET",
+      url: `${NOCODB_CONFIG.baseUrl}/tables/${NOCODB_CONFIG.tableId}/records`,
+      headers: {
+        "xc-token": NOCODB_CONFIG.apiToken,
+      },
+      params: {
+        limit: 1,
+      },
+    });
+    console.log("✅ NocoDB connection test successful:", response.status);
+    return true;
+  } catch (error) {
+    console.error("❌ NocoDB connection test failed:", error);
+    console.error("📄 Connection error details:", {
+      message: error.message,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data,
+    });
+    return false;
+  }
+}
+
 function showNavratriSuccessMessage(message) {
   // Create success message element with Navratri theme
   const successDiv = document.createElement("div");
@@ -253,17 +438,18 @@ function showNavratriSuccessMessage(message) {
         position: fixed;
         top: 20px;
         right: 20px;
-        background: linear-gradient(45deg, #FF6B6B, #FFE66D, #4ECDC4, #45B7D1, #FF8C42);
+        background: linear-gradient(45deg, #4CAF50, #45a049, #66BB6A);
         color: white;
         padding: 20px 25px;
         border-radius: 15px;
-        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
         z-index: 1000;
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Inter', sans-serif;
         font-size: 16px;
         font-weight: 600;
         animation: navratiSlideIn 0.5s ease-out;
         border: 2px solid rgba(255, 255, 255, 0.3);
+        max-width: 350px;
     `;
 
   successDiv.textContent = message;
@@ -285,7 +471,7 @@ function showNavratriSuccessMessage(message) {
     `;
   document.head.appendChild(style);
 
-  // Remove message after 4 seconds
+  // Remove message after 5 seconds
   setTimeout(() => {
     successDiv.style.animation = "navratiSlideIn 0.5s ease-out reverse";
     setTimeout(() => {
@@ -296,7 +482,42 @@ function showNavratriSuccessMessage(message) {
         document.head.removeChild(style);
       }
     }, 500);
-  }, 4000);
+  }, 5000);
+}
+
+function showNavratriErrorMessage(message) {
+  // Create error message element with warning theme
+  const errorDiv = document.createElement("div");
+  errorDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(45deg, #FF9800, #F57C00, #FFB74D);
+        color: white;
+        padding: 20px 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(255, 152, 0, 0.4);
+        z-index: 1000;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        animation: navratiSlideIn 0.5s ease-out;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        max-width: 350px;
+    `;
+
+  errorDiv.textContent = message;
+  document.body.appendChild(errorDiv);
+
+  // Remove message after 6 seconds (longer for error messages)
+  setTimeout(() => {
+    errorDiv.style.animation = "navratiSlideIn 0.5s ease-out reverse";
+    setTimeout(() => {
+      if (document.body.contains(errorDiv)) {
+        document.body.removeChild(errorDiv);
+      }
+    }, 500);
+  }, 6000);
 }
 
 // Function to generate unique invoice number
@@ -396,6 +617,27 @@ document.addEventListener("DOMContentLoaded", function () {
   // Generate unique registration number
   const registrationNumber = getUniqueInvoiceNumber();
   document.getElementById("invoiceNumber").value = registrationNumber;
+
+  // Test NocoDB connection on page load
+  console.log("🚀 Page loaded, testing NocoDB connection...");
+  testNocoDBConnection().then((success) => {
+    if (success) {
+      console.log("✅ NocoDB is ready for registrations!");
+
+      // Fetch all field IDs for reference
+      getAllFieldIds().then((fields) => {
+        if (fields) {
+          console.log(
+            "📋 Field mapping complete! Check console above for all field IDs."
+          );
+        }
+      });
+    } else {
+      console.warn(
+        "⚠️ NocoDB connection issues detected. Check console for details."
+      );
+    }
+  });
 
   // Calculate amount when persons change
   document
