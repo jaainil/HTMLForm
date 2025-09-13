@@ -187,9 +187,11 @@ function generateNavratriRegistrationPDF(data) {
       <p style="color: #999; font-size: 12px; margin: 10px 0;">માં ઉમિયાં યુવા ગ્રુપ - આણંદ નવરાત્રી આયોજન 2025</p>
       
       <!-- Powered by Aexaware Footer in PDF -->
-      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: center; gap: 12px;">
-        <img src="./AE.png" alt="Aexaware Infotech" style="width: 30px; height: 30px; object-fit: contain;" />
-        <p style="color: #666; font-size: 12px; margin: 0;">Powered by <strong style="color: #333;">aexaware infotech pvt. ltd.</strong></p>
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e1e8ed; text-align: center;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+          <p style="color: #666; font-size: 14px; margin: 0; font-weight: 500;">Powered by</p>
+          <img src="./AE.png" alt="Aexaware Infotech" style="width: 60px; height: 20px; object-fit: contain;" />
+        </div>
       </div>
     </div>
   `;
@@ -300,7 +302,7 @@ async function submitToNocoDB(formData) {
       "✅ NocoDB માં ડેટા સફળતાપૂર્વક સાચવવામાં આવ્યો:",
       response.data
     );
-    console.log("📋 પ્રતિભાવ સ્થિતિ:", response.status);
+    console.log("📋 પ્રતિસાદ સ્થિતિ:", response.status);
     return { success: true, data: response.data };
   } catch (error) {
     console.error("❌ NocoDB માં સાચવવામાં ભૂલ:", error);
