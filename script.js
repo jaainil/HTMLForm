@@ -185,6 +185,12 @@ function generateNavratriRegistrationPDF(data) {
       <p style="color: #45B7D1; font-size: 20px; font-style: italic; margin: 20px 0;">જય માતાજી! નવરાત્રીની હાર્દિક શુભકામનાઓ!</p>
       <div style="height: 2px; background: linear-gradient(90deg, #FF6B6B, #FFE66D, #4ECDC4, #45B7D1, #FF8C42); margin: 20px 0;"></div>
       <p style="color: #999; font-size: 12px; margin: 10px 0;">માં ઉમિયાં યુવા ગ્રુપ - આણંદ નવરાત્રી આયોજન 2025</p>
+      
+      <!-- Powered by Aexaware Footer in PDF -->
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: center; gap: 12px;">
+        <img src="./AE.png" alt="Aexaware Infotech" style="width: 30px; height: 30px; object-fit: contain;" />
+        <p style="color: #666; font-size: 12px; margin: 0;">Powered by <strong style="color: #333;">aexaware infotech pvt. ltd.</strong></p>
+      </div>
     </div>
   `;
 
@@ -359,7 +365,7 @@ async function getAllFieldIds() {
       },
     });
 
-    console.log("📋 ટેબલ સ્કીમા પ્રતિભાવ:", response.data);
+    console.log("📋 ટેબલ સ્કીમા પ્રતિસાદ:", response.data);
 
     if (response.data && response.data.columns) {
       console.log("📊 બધા ફિલ્ડ ID અને નામો:");

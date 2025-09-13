@@ -310,6 +310,43 @@ textarea {
   transform: none;
 }
 
+/* Powered by Aexaware Footer Styles */
+.powered-by-footer {
+  margin-top: 30px;
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #e1e8ed;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 0 0 12px 12px;
+}
+
+.powered-by-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.aexaware-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.powered-by-text {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+  font-weight: 400;
+}
+
+.powered-by-text strong {
+  color: #333;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 25px;
@@ -353,5 +390,20 @@ textarea {
   .navratri-btn {
     font-size: 14px;
     padding: 14px;
+  }
+
+  /* Responsive styles for powered by footer */
+  .powered-by-content {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .aexaware-logo {
+    width: 35px;
+    height: 35px;
+  }
+
+  .powered-by-text {
+    font-size: 12px;
   }
 }
