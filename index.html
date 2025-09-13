@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🙏 Maa Umiya Yuva Group Navratri Registration 🙏</title>
+  <title>🙏 Maa Umiya Youth Group Navratri Registration 🙏</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -18,8 +18,13 @@
 
   <div class="container">
     <div class="navratri-header">
-      <h1>🎊 Maa Umiya Yuva Group 🎊</h1>
-      <p class="festival-subtitle">આણંદ નવરાત્રી આયોજન 27,28/09/2025 (Two Days Event)</p>
+      <div class="header-with-logo">
+        <img src="logo.png" alt="Maa Umiya Youth Group Logo" class="group-logo">
+        <div class="header-text">
+          <h1>Maa Umiya Youth Group</h1>
+          <p class="festival-subtitle">Anand Navratri Celebration 27-28 September 2025 (Two Days)</p>
+        </div>
+      </div>
       <div class="event-info">
         <p><strong>📧 Contact:</strong> thechampstv9898@gmail.com</p>
         <p><strong>📞 Help:</strong> 98250 45894</p>
@@ -36,24 +41,25 @@
     <div class="important-notice">
       <h3>⚠️ Important Instructions:</h3>
       <ul>
-        <li>• Registration is mandatory for entry</li>
-        <li>• Last date for registration: <strong>21/09/2025</strong></li>
-        <li>• Single day registration not available</li>
-        <li>• Rate: <strong>Rs. 1000 per person</strong> for 2 days</li>
-        <li>• Please enter participant count carefully</li>
+        <li>• Registration is mandatory for entry - No entry without registration</li>
+        <li>• Last date for registration: <strong>21 September 2025</strong></li>
+        <li>• Single day registration is not available</li>
+        <li>• Rate: <strong>Rs. 1000 per person</strong> for 2 days event</li>
+        <li>• Please count participants carefully</li>
+        <li>• No arguments at venue regarding registration or payment</li>
       </ul>
     </div>
 
     <form id="invoiceForm">
       <div class="form-group">
         <label for="fullName">🙏 Full Name (Surname First) *:</label>
-        <input type="text" id="fullName" name="fullName" required placeholder="e.g., Patel Rajesh">
+        <input type="text" id="fullName" name="fullName" required placeholder="e.g., Patel Rajesh Kumar">
       </div>
 
       <div class="form-group">
         <label for="phoneNumber">📞 Mobile Number *:</label>
-        <input type="tel" id="phoneNumber" name="phoneNumber" required placeholder="10 digit mobile number"
-          pattern="[0-9]{10}">
+        <input type="tel" id="phoneNumber" name="phoneNumber" required placeholder="10-digit mobile number"
+          pattern="[0-9]{10}" maxlength="10">
       </div>
 
       <div class="form-group">
@@ -64,7 +70,7 @@
 
       <div class="form-group">
         <label for="address">🏠 Address:</label>
-        <textarea id="address" name="address" rows="3" placeholder="Enter your complete address"></textarea>
+        <textarea id="address" name="address" rows="3" placeholder="Your complete address (optional)"></textarea>
       </div>
 
       <div class="form-group">
@@ -99,7 +105,7 @@
     </form>
 
     <div class="navratri-footer">
-      <p>🌙 Jai Mataji! Navratri ni Hardik Shubhkamnaao! 🌙</p>
+      <p>🌙 Jai Mataji! Wishing you a blessed Navratri! 🌙</p>
     </div>
   </div>
 

@@ -1,0 +1,54 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer circle -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#000" stroke-width="3"/>
+  
+  <!-- Inner circle background -->
+  <circle cx="100" cy="100" r="75" fill="url(#gradient)" stroke="#c0392b" stroke-width="2"/>
+  
+  <!-- Gradient definition -->
+  <defs>
+    <radialGradient id="gradient" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#fff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#e74c3c;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Decorative elements around the circle -->
+  <g fill="#c0392b">
+    <!-- Top decorative pattern -->
+    <path d="M100 15 L105 25 L95 25 Z"/>
+    
+    <!-- Decorative stars around the circle -->
+    <g transform="translate(50,50)">
+      <path d="M0,0 L3,6 L9,6 L4.5,10 L6,16 L0,12 L-6,16 L-4.5,10 L-9,6 L-3,6 Z"/>
+    </g>
+    <g transform="translate(150,50)">
+      <path d="M0,0 L3,6 L9,6 L4.5,10 L6,16 L0,12 L-6,16 L-4.5,10 L-9,6 L-3,6 Z"/>
+    </g>
+    <g transform="translate(50,150)">
+      <path d="M0,0 L3,6 L9,6 L4.5,10 L6,16 L0,12 L-6,16 L-4.5,10 L-9,6 L-3,6 Z"/>
+    </g>
+    <g transform="translate(150,150)">
+      <path d="M0,0 L3,6 L9,6 L4.5,10 L6,16 L0,12 L-6,16 L-4.5,10 L-9,6 L-3,6 Z"/>
+    </g>
+    <g transform="translate(30,100)">
+      <path d="M0,0 L3,6 L9,6 L4.5,10 L6,16 L0,12 L-6,16 L-4.5,10 L-9,6 L-3,6 Z"/>
+    </g>
+    <g transform="translate(170,100)">
+      <path d="M0,0 L3,6 L9,6 L4.5,10 L6,16 L0,12 L-6,16 L-4.5,10 L-9,6 L-3,6 Z"/>
+    </g>
+  </g>
+  
+  <!-- Gujarati text around the circle -->
+  <path id="circle-path" d="M 100,100 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" fill="none"/>
+  <text font-family="serif" font-size="16" font-weight="bold" fill="#c0392b">
+    <textPath href="#circle-path" startOffset="0%">માં ઉમિયાં યુવા ગ્રુપ</textPath>
+  </text>
+  <text font-family="serif" font-size="16" font-weight="bold" fill="#c0392b">
+    <textPath href="#circle-path" startOffset="50%">આણંદ</textPath>
+  </text>
+  
+  <!-- Central deity figure placeholder -->
+  <circle cx="100" cy="100" r="35" fill="#fff" stroke="#c0392b" stroke-width="1"/>
+  <text x="100" y="105" text-anchor="middle" font-family="serif" font-size="12" fill="#c0392b">🕉️</text>
+</svg>
