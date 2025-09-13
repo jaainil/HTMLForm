@@ -96,208 +96,148 @@ document
   .addEventListener("input", calculateTotalAmount);
 
 function generateNavratriRegistrationPDF(data) {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  // Create a hidden div with the receipt content
+  const receiptDiv = document.createElement("div");
+  receiptDiv.style.cssText = `
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    width: 800px;
+    padding: 40px;
+    background: white;
+    font-family: 'Noto Sans Gujarati', sans-serif;
+    color: #333;
+    line-height: 1.6;
+  `;
 
-  // Set colors for Navratri theme
-  const navratriColors = {
-    red: [255, 107, 107],
-    yellow: [255, 230, 109],
-    green: [78, 205, 196],
-    blue: [69, 183, 209],
-    orange: [255, 140, 66],
-  };
+  receiptDiv.innerHTML = `
+    <div style="text-align: center; margin-bottom: 30px;">
+      <h1 style="color: #FF6B6B; font-size: 32px; margin: 0; font-weight: bold;">માં ઉમિયાં યુવા ગ્રુપ</h1>
+      <h2 style="color: #45B7D1; font-size: 24px; margin: 10px 0; font-weight: bold;">આણંદ નવરાત્રી આયોજન</h2>
+      <p style="color: #666; font-size: 18px; margin: 5px 0;">27, 28/09/2025 (બે દિવસ)</p>
+      <p style="color: #666; font-size: 14px; margin: 5px 0;">સંપર્ક: thechampstv9898@gmail.com | મદદ: 98250 45894</p>
+      <div style="height: 3px; background: linear-gradient(90deg, #FF6B6B, #FFE66D, #4ECDC4, #45B7D1, #FF8C42); margin: 20px 0;"></div>
+      <h3 style="color: #FF8C42; font-size: 22px; margin: 20px 0; font-weight: bold;">રજીસ્ટ્રેશન રસીદ</h3>
+    </div>
 
-  // Background gradient effect (simplified for PDF)
-  doc.setFillColor(255, 248, 240);
-  doc.rect(0, 0, 210, 297, "F");
+    <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+      <div style="flex: 1; margin-right: 20px;">
+        <h4 style="color: #45B7D1; font-size: 18px; margin-bottom: 15px; font-weight: bold;">સહભાગી વિગતો:</h4>
+        <p style="margin: 8px 0; font-size: 16px;"><strong>નામ:</strong> ${
+          data.fullName
+        }</p>
+        <p style="margin: 8px 0; font-size: 16px;"><strong>મોબાઈલ:</strong> ${
+          data.phoneNumber
+        }</p>
+        <p style="margin: 8px 0; font-size: 16px;"><strong>કુલ વ્યક્તિઓ:</strong> ${
+          data.totalPersons
+        } (5 વર્ષથી ઉપર)</p>
+        ${
+          data.address
+            ? `<p style="margin: 8px 0; font-size: 16px;"><strong>સરનામું:</strong> ${data.address}</p>`
+            : ""
+        }
+        ${
+          data.email
+            ? `<p style="margin: 8px 0; font-size: 16px;"><strong>ઇમેઇલ:</strong> ${data.email}</p>`
+            : ""
+        }
+      </div>
+      
+      <div style="flex: 1;">
+        <h4 style="color: #FF8C42; font-size: 18px; margin-bottom: 15px; font-weight: bold;">રજીસ્ટ્રેશન માહિતી:</h4>
+        <p style="margin: 8px 0; font-size: 16px;"><strong>રજીસ્ટ્રેશન #:</strong> ${
+          data.invoiceNumber
+        }</p>
+        <p style="margin: 8px 0; font-size: 16px;"><strong>તારીખ:</strong> ${
+          data.registrationDate
+        }</p>
+        <p style="margin: 8px 0; font-size: 16px;"><strong>દર:</strong> ₹ 1000 પ્રતિ વ્યક્તિ</p>
+        <p style="margin: 8px 0; font-size: 16px;">(2 દિવસના કાર્યક્રમ માટે)</p>
+      </div>
+    </div>
 
-  // Decorative border
-  doc.setDrawColor(
-    navratriColors.red[0],
-    navratriColors.red[1],
-    navratriColors.red[2]
-  );
-  doc.setLineWidth(3);
-  doc.rect(10, 10, 190, 277);
+    <div style="text-align: center; margin: 30px 0;">
+      <div style="display: inline-block; padding: 15px 30px; border: 3px solid #FF8C42; border-radius: 10px; background: #FFF8F0;">
+        <h3 style="color: #FF6B6B; font-size: 24px; margin: 0; font-weight: bold;">કુલ: ₹ ${
+          data.totalAmount
+        }</h3>
+      </div>
+    </div>
 
-  // Inner decorative border
-  doc.setDrawColor(
-    navratriColors.yellow[0],
-    navratriColors.yellow[1],
-    navratriColors.yellow[2]
-  );
-  doc.setLineWidth(1);
-  doc.rect(15, 15, 180, 267);
+    <div style="margin: 30px 0;">
+      <h4 style="color: #FF6B6B; font-size: 18px; margin-bottom: 15px; font-weight: bold;">મહત્વપૂર્ણ સૂચનાઓ:</h4>
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="margin: 8px 0; font-size: 14px;">• રજીસ્ટ્રેશન ફરજિયાત છે - રજીસ્ટ્રેશન વગર પ્રવેશ મળશે નહીં</li>
+        <li style="margin: 8px 0; font-size: 14px;">• રજીસ્ટ્રેશનની છેલ્લી તારીખ: 21/09/2025</li>
+        <li style="margin: 8px 0; font-size: 14px;">• એક દિવસ માટે રજીસ્ટ્રેશન ઉપલબ્ધ નથી</li>
+        <li style="margin: 8px 0; font-size: 14px;">• પ્રવેશ માટે આ રસીદ સાથે રાખો</li>
+        <li style="margin: 8px 0; font-size: 14px;">• રજીસ્ટ્રેશન અથવા ચુકવણી અંગે સ્થળ પર કોઈ દલીલ નહીં</li>
+      </ul>
+    </div>
 
-  // Title with Navratri theme
-  doc.setFontSize(20);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(
-    navratriColors.red[0],
-    navratriColors.red[1],
-    navratriColors.red[2]
-  );
-  doc.text("માં ઉમિયાં યુવા ગ્રુપ", 105, 30, { align: "center" });
+    <div style="text-align: center; margin-top: 40px;">
+      <p style="color: #45B7D1; font-size: 20px; font-style: italic; margin: 20px 0;">જય માતાજી! નવરાત્રીની હાર્દિક શુભકામનાઓ!</p>
+      <div style="height: 2px; background: linear-gradient(90deg, #FF6B6B, #FFE66D, #4ECDC4, #45B7D1, #FF8C42); margin: 20px 0;"></div>
+      <p style="color: #999; font-size: 12px; margin: 10px 0;">માં ઉમિયાં યુવા ગ્રુપ - આણંદ નવરાત્રી આયોજન 2025</p>
+    </div>
+  `;
 
-  // Event details
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(
-    navratriColors.blue[0],
-    navratriColors.blue[1],
-    navratriColors.blue[2]
-  );
-  doc.text("આણંદ નવરાત્રી આયોજન", 105, 40, { align: "center" });
+  // Add to document
+  document.body.appendChild(receiptDiv);
 
-  doc.setFontSize(12);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(100, 100, 100);
-  doc.text("27, 28/09/2025 (બે દિવસ)", 105, 50, { align: "center" });
+  // Wait for fonts to load, then generate PDF
+  setTimeout(() => {
+    html2canvas(receiptDiv, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: "#ffffff",
+    })
+      .then((canvas) => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF("p", "mm", "a4");
 
-  // Contact info
-  doc.setFontSize(10);
-  doc.text("સંપર્ક: thechampstv9898@gmail.com | મદદ: 98250 45894", 105, 60, {
-    align: "center",
-  });
+        const imgData = canvas.toDataURL("image/png");
+        const imgWidth = 210;
+        const pageHeight = 295;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
 
-  // Decorative line
-  doc.setDrawColor(
-    navratriColors.green[0],
-    navratriColors.green[1],
-    navratriColors.green[2]
-  );
-  doc.setLineWidth(2);
-  doc.line(30, 70, 180, 70);
+        let position = 0;
 
-  // Registration Receipt Title
-  doc.setFontSize(16);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(
-    navratriColors.orange[0],
-    navratriColors.orange[1],
-    navratriColors.orange[2]
-  );
-  doc.text("રજીસ્ટ્રેશન રસીદ", 105, 85, { align: "center" });
+        doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
 
-  // Registration details
-  doc.setFontSize(12);
-  doc.setFont("helvetica", "normal");
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          doc.addPage();
+          doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
 
-  // Left column - Participant Information
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(
-    navratriColors.blue[0],
-    navratriColors.blue[1],
-    navratriColors.blue[2]
-  );
-  doc.text("સહભાગી વિગતો:", 25, 105);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(0, 0, 0);
-  doc.text(`નામ: ${data.fullName}`, 25, 115);
-  doc.text(`મોબાઈલ: ${data.phoneNumber}`, 25, 125);
-  doc.text(`કુલ વ્યક્તિઓ: ${data.totalPersons} (5 વર્ષથી ઉપર)`, 25, 135);
-  if (data.address) {
-    doc.text(`સરનામું: ${data.address}`, 25, 145);
-  }
-  if (data.email) {
-    doc.text(`ઇમેઇલ: ${data.email}`, 25, 155);
-  }
+        // Save the PDF
+        const fileName = `નવરાત્રી_રજીસ્ટ્રેશન_${
+          data.invoiceNumber
+        }_${data.fullName.replace(/\s+/g, "_")}.pdf`;
+        doc.save(fileName);
 
-  // Right column - Registration Information
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(
-    navratriColors.orange[0],
-    navratriColors.orange[1],
-    navratriColors.orange[2]
-  );
-  doc.text("રજીસ્ટ્રેશન માહિતી:", 110, 105);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(0, 0, 0);
-  doc.text(`રજીસ્ટ્રેશન #: ${data.invoiceNumber}`, 110, 115);
-  doc.text(`તારીખ: ${data.registrationDate}`, 110, 125);
-  doc.text(`દર: ₹ 1000 પ્રતિ વ્યક્તિ`, 110, 135);
-  doc.text(`(2 દિવસના કાર્યક્રમ માટે)`, 110, 145);
+        // Remove the temporary div
+        document.body.removeChild(receiptDiv);
 
-  // Calculate starting Y position for next section
-  let currentY = 170;
-
-  // Total amount with decorative box
-  const totalY = currentY;
-  doc.setDrawColor(
-    navratriColors.orange[0],
-    navratriColors.orange[1],
-    navratriColors.orange[2]
-  );
-  doc.setFillColor(255, 248, 240);
-  doc.setLineWidth(2);
-  doc.rect(110, totalY - 10, 80, 25, "FD");
-
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(
-    navratriColors.red[0],
-    navratriColors.red[1],
-    navratriColors.red[2]
-  );
-  doc.text(`કુલ: ₹ ${data.totalAmount}`, 150, totalY + 5, {
-    align: "center",
-  });
-
-  // Important instructions
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(
-    navratriColors.red[0],
-    navratriColors.red[1],
-    navratriColors.red[2]
-  );
-  doc.text("મહત્વપૂર્ણ સૂચનાઓ:", 25, totalY + 35);
-
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(0, 0, 0);
-  const instructions = [
-    "• રજીસ્ટ્રેશન ફરજિયાત છે - રજીસ્ટ્રેશન વગર પ્રવેશ મળશે નહીં",
-    "• રજીસ્ટ્રેશનની છેલ્લી તારીખ: 21/09/2025",
-    "• એક દિવસ માટે રજીસ્ટ્રેશન ઉપલબ્ધ નથી",
-    "• પ્રવેશ માટે આ રસીદ સાથે રાખો",
-    "• રજીસ્ટ્રેશન અથવા ચુકવણી અંગે સ્થળ પર કોઈ દલીલ નહીં",
-  ];
-
-  instructions.forEach((instruction, index) => {
-    doc.text(instruction, 25, totalY + 45 + index * 8);
-  });
-
-  // Blessing message
-  doc.setFontSize(12);
-  doc.setFont("helvetica", "italic");
-  doc.setTextColor(
-    navratriColors.blue[0],
-    navratriColors.blue[1],
-    navratriColors.blue[2]
-  );
-  doc.text("જય માતાજી! નવરાત્રીની હાર્દિક શુભકામનાઓ!", 105, totalY + 90, {
-    align: "center",
-  });
-
-  // Footer
-  doc.setFontSize(8);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(100, 100, 100);
-  doc.text(
-    "માં ઉમિયાં યુવા ગ્રુપ - આણંદ નવરાત્રી આયોજન 2025",
-    105,
-    totalY + 105,
-    { align: "center" }
-  );
-
-  // Save the PDF
-  const fileName = `નવરાત્રી_રજીસ્ટ્રેશન_${
-    data.invoiceNumber
-  }_${data.fullName.replace(/\s+/g, "_")}.pdf`;
-  doc.save(fileName);
-
-  // Show success message
-  showNavratriSuccessMessage("નવરાત્રી રજીસ્ટ્રેશન રસીદ સફળતાપૂર્વક બની ગઈ!");
+        // Show success message
+        showNavratriSuccessMessage(
+          "નવરાત્રી રજીસ્ટ્રેશન રસીદ સફળતાપૂર્વક બની ગઈ!"
+        );
+      })
+      .catch((error) => {
+        console.error("PDF generation error:", error);
+        document.body.removeChild(receiptDiv);
+        showNavratriErrorMessage(
+          "PDF બનાવવામાં ભૂલ થઈ. કૃપા કરીને ફરી પ્રયાસ કરો."
+        );
+      });
+  }, 1000); // Wait 1 second for fonts to load
 }
 
 // NocoDB Configuration

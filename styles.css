@@ -5,8 +5,8 @@
 }
 
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
+  font-family: "Noto Sans Gujarati", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
   background-color: #f5f7fa;
   min-height: 100vh;
   padding: 20px 0;
@@ -177,8 +177,8 @@ textarea {
   font-size: 16px;
   transition: all 0.3s ease;
   background-color: #f9f9f9;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
+  font-family: "Noto Sans Gujarati", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
   font-weight: 400;
 }
 
