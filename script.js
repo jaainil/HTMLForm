@@ -8,7 +8,7 @@ document
 
     if (!termsAccepted) {
       alert(
-        "⚠️ Please accept the terms and conditions to proceed with registration."
+        "⚠️ કૃપા કરીને રજીસ્ટ્રેશન કરવા માટે નિયમો અને શરતો સ્વીકારો."
       );
       return;
     }
@@ -17,7 +17,7 @@ document
     const submitButton = document.querySelector(".navratri-btn");
     const originalButtonText = submitButton.innerHTML;
     submitButton.innerHTML =
-      '<span class="btn-text">🔄 Processing Registration...</span>';
+      '<span class="btn-text">🔄 રજીસ્ટ્રેશન પ્રક્રિયા ચાલુ છે...</span>';
     submitButton.disabled = true;
 
     // Get form data
@@ -34,46 +34,46 @@ document
 
     try {
       // Test NocoDB connection first
-      console.log("🔍 Testing NocoDB connection before submission...");
+      console.log("🔍 સબમિશન પહેલા NocoDB કનેક્શન ચકાસી રહ્યા છીએ...");
       const connectionTest = await testNocoDBConnection();
 
       if (!connectionTest) {
         console.warn(
-          "⚠️ NocoDB connection test failed, proceeding with PDF only"
+          "⚠️ NocoDB કનેક્શન નિષ્ફળ થયું, ફક્ત PDF સાથે આગળ વધી રહ્યા છીએ"
         );
         showNavratriErrorMessage(
-          "⚠️ Database connection failed. Registration saved locally and PDF generated."
+          "⚠️ ડેટાબેઝ કનેક્શન નિષ્ફળ થયું. રજીસ્ટ્રેશન સ્થાનિક રીતે સાચવવામાં આવ્યું છે અને PDF જનરેટ થયું છે."
         );
         generateNavratriRegistrationPDF(formData);
         return;
       }
 
       // Submit data to NocoDB first
-      console.log("📤 Submitting data to NocoDB...");
+      console.log("📤 NocoDB પર ડેટા સબમિટ કરી રહ્યા છીએ...");
       const nocoResult = await submitToNocoDB(formData);
 
       if (nocoResult.success) {
-        console.log("✅ NocoDB submission successful!");
+        console.log("✅ NocoDB સબમિશન સફળ!");
         // Generate PDF only if NocoDB submission is successful
         generateNavratriRegistrationPDF(formData);
 
         // Show success message
         showNavratriSuccessMessage(
-          "✅ Registration successful! Data saved to database and PDF generated."
+          "✅ રજીસ્ટ્રેશન સફળ! ડેટા ડેટાબેઝમાં સાચવવામાં આવ્યો અને PDF જનરેટ થયું."
         );
       } else {
-        console.error("❌ NocoDB submission failed:", nocoResult.error);
+        console.error("❌ NocoDB સબમિશન નિષ્ફળ:", nocoResult.error);
         // Show error message but still generate PDF
         showNavratriErrorMessage(
-          `⚠️ Database save failed: ${nocoResult.error}. PDF generated successfully.`
+          `⚠️ ડેટાબેઝ સેવ નિષ્ફળ: ${nocoResult.error}. PDF સફળતાપૂર્વક જનરેટ થયું.`
         );
         generateNavratriRegistrationPDF(formData);
       }
     } catch (error) {
-      console.error("💥 Registration error:", error);
+      console.error("💥 રજીસ્ટ્રેશન ભૂલ:", error);
       // Show error message but still generate PDF
       showNavratriErrorMessage(
-        `⚠️ Registration error: ${error.message}. PDF generated successfully.`
+        `⚠️ રજીસ્ટ્રેશન ભૂલ: ${error.message}. PDF સફળતાપૂર્વક જનરેટ થયું.`
       );
       generateNavratriRegistrationPDF(formData);
     } finally {
@@ -87,7 +87,7 @@ document
 function calculateTotalAmount() {
   const totalPersons =
     parseInt(document.getElementById("totalPersons").value) || 0;
-  const amountPerPerson = 1000; // Rs. 1000 per person for 2 days
+  const amountPerPerson = 1000; // ₹ 1000 પ્રતિ વ્યક્તિ (2 દિવસ માટે)
   const totalAmount = totalPersons * amountPerPerson;
   document.getElementById("totalAmount").value = totalAmount;
 }
@@ -140,7 +140,7 @@ function generateNavratriRegistrationPDF(data) {
     navratriColors.red[1],
     navratriColors.red[2]
   );
-  doc.text("MAA UMIYA YUVA GROUP", 105, 30, { align: "center" });
+  doc.text("માં ઉમિયાં યુવા ગ્રુપ", 105, 30, { align: "center" });
 
   // Event details
   doc.setFontSize(14);
@@ -150,16 +150,16 @@ function generateNavratriRegistrationPDF(data) {
     navratriColors.blue[1],
     navratriColors.blue[2]
   );
-  doc.text("ANAND NAVRATRI AYOJAN", 105, 40, { align: "center" });
+  doc.text("આણંદ નવરાત્રી આયોજન", 105, 40, { align: "center" });
 
   doc.setFontSize(12);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(100, 100, 100);
-  doc.text("27, 28/09/2025 (Two Days Event)", 105, 50, { align: "center" });
+  doc.text("27, 28/09/2025 (બે દિવસ)", 105, 50, { align: "center" });
 
   // Contact info
   doc.setFontSize(10);
-  doc.text("Contact: thechampstv9898@gmail.com | Help: 98250 45894", 105, 60, {
+  doc.text("સંપર્ક: thechampstv9898@gmail.com | મદદ: 98250 45894", 105, 60, {
     align: "center",
   });
 
@@ -180,7 +180,7 @@ function generateNavratriRegistrationPDF(data) {
     navratriColors.orange[1],
     navratriColors.orange[2]
   );
-  doc.text("REGISTRATION RECEIPT", 105, 85, { align: "center" });
+  doc.text("રજીસ્ટ્રેશન રસીદ", 105, 85, { align: "center" });
 
   // Registration details
   doc.setFontSize(12);
@@ -193,17 +193,17 @@ function generateNavratriRegistrationPDF(data) {
     navratriColors.blue[1],
     navratriColors.blue[2]
   );
-  doc.text("Participant Details:", 25, 105);
+  doc.text("સહભાગી વિગતો:", 25, 105);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(0, 0, 0);
-  doc.text(`Name: ${data.fullName}`, 25, 115);
-  doc.text(`Mobile: ${data.phoneNumber}`, 25, 125);
-  doc.text(`Total Persons: ${data.totalPersons} (Above 5 years)`, 25, 135);
+  doc.text(`નામ: ${data.fullName}`, 25, 115);
+  doc.text(`મોબાઈલ: ${data.phoneNumber}`, 25, 125);
+  doc.text(`કુલ વ્યક્તિઓ: ${data.totalPersons} (5 વર્ષથી ઉપર)`, 25, 135);
   if (data.address) {
-    doc.text(`Address: ${data.address}`, 25, 145);
+    doc.text(`સરનામું: ${data.address}`, 25, 145);
   }
   if (data.email) {
-    doc.text(`Email: ${data.email}`, 25, 155);
+    doc.text(`ઇમેઇલ: ${data.email}`, 25, 155);
   }
 
   // Right column - Registration Information
@@ -213,13 +213,13 @@ function generateNavratriRegistrationPDF(data) {
     navratriColors.orange[1],
     navratriColors.orange[2]
   );
-  doc.text("Registration Info:", 110, 105);
+  doc.text("રજીસ્ટ્રેશન માહિતી:", 110, 105);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(0, 0, 0);
-  doc.text(`Registration #: ${data.invoiceNumber}`, 110, 115);
-  doc.text(`Date: ${data.registrationDate}`, 110, 125);
-  doc.text(`Rate: Rs. 1000 per person`, 110, 135);
-  doc.text(`(For 2 days event)`, 110, 145);
+  doc.text(`રજીસ્ટ્રેશન #: ${data.invoiceNumber}`, 110, 115);
+  doc.text(`તારીખ: ${data.registrationDate}`, 110, 125);
+  doc.text(`દર: ₹ 1000 પ્રતિ વ્યક્તિ`, 110, 135);
+  doc.text(`(2 દિવસના કાર્યક્રમ માટે)`, 110, 145);
 
   // Calculate starting Y position for next section
   let currentY = 170;
@@ -241,7 +241,7 @@ function generateNavratriRegistrationPDF(data) {
     navratriColors.red[1],
     navratriColors.red[2]
   );
-  doc.text(`Total: Rs. ${data.totalAmount}`, 150, totalY + 5, {
+  doc.text(`કુલ: ₹ ${data.totalAmount}`, 150, totalY + 5, {
     align: "center",
   });
 
@@ -253,16 +253,16 @@ function generateNavratriRegistrationPDF(data) {
     navratriColors.red[1],
     navratriColors.red[2]
   );
-  doc.text("IMPORTANT INSTRUCTIONS:", 25, totalY + 35);
+  doc.text("મહત્વપૂર્ણ સૂચનાઓ:", 25, totalY + 35);
 
   doc.setFont("helvetica", "normal");
   doc.setTextColor(0, 0, 0);
   const instructions = [
-    "• Registration is mandatory for entry",
-    "• Last date for registration: 21/09/2025",
-    "• No single day registration available",
-    "• Bring this receipt for entry",
-    "• No arguments at venue regarding registration",
+    "• રજીસ્ટ્રેશન ફરજિયાત છે - રજીસ્ટ્રેશન વગર પ્રવેશ મળશે નહીં",
+    "• રજીસ્ટ્રેશનની છેલ્લી તારીખ: 21/09/2025",
+    "• એક દિવસ માટે રજીસ્ટ્રેશન ઉપલબ્ધ નથી",
+    "• પ્રવેશ માટે આ રસીદ સાથે રાખો",
+    "• રજીસ્ટ્રેશન અથવા ચુકવણી અંગે સ્થળ પર કોઈ દલીલ નહીં",
   ];
 
   instructions.forEach((instruction, index) => {
@@ -277,7 +277,7 @@ function generateNavratriRegistrationPDF(data) {
     navratriColors.blue[1],
     navratriColors.blue[2]
   );
-  doc.text("Jai Mataji! Navratri ni Hardik Shubhkamnaao!", 105, totalY + 90, {
+  doc.text("જય માતાજી! નવરાત્રીની હાર્દિક શુભકામનાઓ!", 105, totalY + 90, {
     align: "center",
   });
 
@@ -286,14 +286,14 @@ function generateNavratriRegistrationPDF(data) {
   doc.setFont("helvetica", "normal");
   doc.setTextColor(100, 100, 100);
   doc.text(
-    "Maa Umiya Yuva Group - Anand Navratri Ayojan 2025",
+    "માં ઉમિયાં યુવા ગ્રુપ - આણંદ નવરાત્રી આયોજન 2025",
     105,
     totalY + 105,
     { align: "center" }
   );
 
   // Save the PDF
-  const fileName = `Navratri_Registration_${
+  const fileName = `નવરાત્રી_રજીસ્ટ્રેશન_${
     data.invoiceNumber
   }_${data.fullName.replace(/\s+/g, "_")}.pdf`;
   doc.save(fileName);
@@ -312,8 +312,8 @@ const NOCODB_CONFIG = {
 
 // Function to submit data to NocoDB
 async function submitToNocoDB(formData) {
-  console.log("🔄 Attempting to submit data to NocoDB...");
-  console.log("📊 Form data to submit:", formData);
+  console.log("🔄 NocoDB પર ડેટા સબમિટ કરવાનો પ્રયાસ કરી રહ્યા છીએ...");
+  console.log("📊 સબમિટ કરવા માટેનો ફોર્મ ડેટા:", formData);
 
   try {
     // Use the correct field IDs from your NocoDB table
@@ -331,7 +331,7 @@ async function submitToNocoDB(formData) {
     // You'll need to provide the field ID for registration number
     // nocoData["REGISTRATION_NUMBER_FIELD_ID"] = formData.invoiceNumber;
 
-    console.log("📤 Sending to NocoDB with field IDs:", nocoData);
+    console.log("📤 ફિલ્ડ ID સાથે NocoDB પર મોકલી રહ્યા છીએ:", nocoData);
     console.log(
       "🔗 API URL:",
       `${NOCODB_CONFIG.baseUrl}/tables/${NOCODB_CONFIG.tableId}/records`
@@ -347,12 +347,12 @@ async function submitToNocoDB(formData) {
       data: nocoData,
     });
 
-    console.log("✅ Data saved to NocoDB successfully:", response.data);
-    console.log("📋 Response status:", response.status);
+    console.log("✅ NocoDB માં ડેટા સફળતાપૂર્વક સાચવવામાં આવ્યો:", response.data);
+    console.log("📋 પ્રતિભાવ સ્થિતિ:", response.status);
     return { success: true, data: response.data };
   } catch (error) {
-    console.error("❌ Error saving to NocoDB:", error);
-    console.error("📄 Error details:", {
+    console.error("❌ NocoDB માં સાચવવામાં ભૂલ:", error);
+    console.error("📄 ભૂલ વિગતો:", {
       message: error.message,
       status: error.response?.status,
       statusText: error.response?.statusText,
@@ -371,43 +371,9 @@ async function submitToNocoDB(formData) {
   }
 }
 
-// Function to get all field IDs from NocoDB table
-async function getAllFieldIds() {
-  try {
-    console.log("🔍 Fetching table schema to get all field IDs...");
-
-    // Get table info including field details - using the correct API endpoint
-    const response = await axios({
-      method: "GET",
-      url: `${NOCODB_CONFIG.baseUrl}/meta/tables/${NOCODB_CONFIG.tableId}`,
-      headers: {
-        "xc-token": NOCODB_CONFIG.apiToken,
-      },
-    });
-
-    console.log("📋 Table schema response:", response.data);
-
-    if (response.data && response.data.columns) {
-      console.log("📊 All Field IDs and Names:");
-      response.data.columns.forEach((column) => {
-        console.log(`${column.title}: ${column.id}`);
-      });
-      return response.data.columns;
-    }
-
-    return null;
-  } catch (error) {
-    console.error("❌ Error fetching field IDs:", error);
-    console.log(
-      "💡 This doesn't affect data submission - it's just for debugging field mapping"
-    );
-    return null;
-  }
-}
-
 // Function to test NocoDB connection
 async function testNocoDBConnection() {
-  console.log("🧪 Testing NocoDB connection...");
+  console.log("🧪 NocoDB કનેક્શન ચકાસી રહ્યા છીએ...");
   try {
     const response = await axios({
       method: "GET",
@@ -419,11 +385,11 @@ async function testNocoDBConnection() {
         limit: 1,
       },
     });
-    console.log("✅ NocoDB connection test successful:", response.status);
+    console.log("✅ NocoDB કનેક્શન પરીક્ષણ સફળ:", response.status);
     return true;
   } catch (error) {
-    console.error("❌ NocoDB connection test failed:", error);
-    console.error("📄 Connection error details:", {
+    console.error("❌ NocoDB કનેક્શન પરીક્ષણ નિષ્ફળ:", error);
+    console.error("📄 કનેક્શન ભૂલ વિગતો:", {
       message: error.message,
       status: error.response?.status,
       statusText: error.response?.statusText,
@@ -433,6 +399,41 @@ async function testNocoDBConnection() {
   }
 }
 
+// Function to get all field IDs from NocoDB table
+async function getAllFieldIds() {
+  try {
+    console.log("🔍 બધા ફિલ્ડ ID મેળવવા માટે ટેબલ સ્કીમા ફેચ કરી રહ્યા છીએ...");
+
+    // Get table info including field details - using the correct API endpoint
+    const response = await axios({
+      method: "GET",
+      url: `${NOCODB_CONFIG.baseUrl}/meta/tables/${NOCODB_CONFIG.tableId}`,
+      headers: {
+        "xc-token": NOCODB_CONFIG.apiToken,
+      },
+    });
+
+    console.log("📋 ટેબલ સ્કીમા પ્રતિભાવ:", response.data);
+
+    if (response.data && response.data.columns) {
+      console.log("📊 બધા ફિલ્ડ ID અને નામો:");
+      response.data.columns.forEach((column) => {
+        console.log(`${column.title}: ${column.id}`);
+      });
+      return response.data.columns;
+    }
+
+    return null;
+  } catch (error) {
+    console.error("❌ ફિલ્ડ ID ફેચ કરવામાં ભૂલ:", error);
+    console.log(
+      "💡 આ ડેટા સબમિશનને અસર કરતું નથી - તે ફક્ત ફિલ્ડ મેપિંગને ડીબગ કરવા માટે છે"
+    );
+    return null;
+  }
+}
+
+// Function to show success message
 function showNavratriSuccessMessage(message) {
   // Create success message element with Navratri theme
   const successDiv = document.createElement("div");
@@ -487,6 +488,7 @@ function showNavratriSuccessMessage(message) {
   }, 5000);
 }
 
+// Function to show error message
 function showNavratriErrorMessage(message) {
   // Create error message element with warning theme
   const errorDiv = document.createElement("div");
@@ -621,22 +623,22 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("invoiceNumber").value = registrationNumber;
 
   // Test NocoDB connection on page load
-  console.log("🚀 Page loaded, testing NocoDB connection...");
+  console.log("🚀 પેજ લોડ થયું, NocoDB કનેક્શન ચકાસી રહ્યા છીએ...");
   testNocoDBConnection().then((success) => {
     if (success) {
-      console.log("✅ NocoDB is ready for registrations!");
+      console.log("✅ NocoDB રજીસ્ટ્રેશન માટે તૈયાર છે!");
 
       // Fetch all field IDs for reference
       getAllFieldIds().then((fields) => {
         if (fields) {
           console.log(
-            "📋 Field mapping complete! Check console above for all field IDs."
+            "📋 ફિલ્ડ મેપિંગ પૂર્ણ! બધા ફિલ્ડ ID માટે ઉપર કન્સોલ તપાસો."
           );
         }
       });
     } else {
       console.warn(
-        "⚠️ NocoDB connection issues detected. Check console for details."
+        "⚠️ NocoDB કનેક્શન સમસ્યાઓ મળી. વિગતો માટે કન્સોલ તપાસો."
       );
     }
   });
