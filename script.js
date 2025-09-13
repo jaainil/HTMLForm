@@ -795,22 +795,6 @@ function showThankYouPage(data) {
         " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 35px rgba(76, 175, 80, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(76, 175, 80, 0.3)'">
           🔄 નવું રજીસ્ટ્રેશન
         </button>
-        
-        <button onclick="window.print()" style="
-          background: linear-gradient(135deg, #FF8C42, #FF6B6B);
-          color: white;
-          border: none;
-          padding: 15px 30px;
-          border-radius: 25px;
-          font-size: 16px;
-          font-weight: 600;
-          cursor: pointer;
-          box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3);
-          transition: all 0.3s ease;
-          font-family: 'Noto Sans Gujarati', 'Inter', sans-serif;
-        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 35px rgba(255, 140, 66, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(255, 140, 66, 0.3)'">
-          🖨️ પ્રિન્ટ કરો
-        </button>
       </div>
 
       <!-- Powered by footer -->
