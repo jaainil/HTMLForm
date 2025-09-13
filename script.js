@@ -212,7 +212,7 @@ function generateNavratriRegistrationPDF(data) {
       <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e1e8ed; text-align: center;">
         <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
           <p style="color: #666; font-size: 14px; margin: 0; font-weight: 500;">Powered by</p>
-          <img src="./AE.png" alt="Aexaware Infotech" style="width: 60px; height: 20px; object-fit: contain;" />
+          <img src="./AE.png" alt="Aexaware Infotech" style="width: 85px; height: 13px; object-fit: contain;" />
         </div>
       </div>
     </div>
