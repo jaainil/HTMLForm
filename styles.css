@@ -37,7 +37,7 @@ body {
   margin-bottom: 30px;
 }
 
-.header-with-logo {
+.logo-and-title {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,44 +47,43 @@ body {
 }
 
 .group-logo {
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
 }
 
-.header-text {
-  text-align: left;
-  flex: 1;
-  min-width: 300px;
+.event-details {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 h1 {
   color: #2c3e50;
-  margin-bottom: 8px;
-  font-size: 2.2em;
+  margin: 0;
+  font-size: 2.5em;
   font-weight: 600;
   line-height: 1.2;
 }
 
 .festival-subtitle {
   color: #666;
-  font-size: 1.1em;
-  margin-bottom: 0;
+  font-size: 1.2em;
+  margin-bottom: 15px;
   font-weight: 400;
   line-height: 1.3;
 }
 
 .event-info {
-  margin-bottom: 20px;
+  margin-bottom: 0;
   text-align: center;
 }
 
 .event-info p {
-  margin: 5px 0;
+  margin: 8px 0;
   color: #555;
-  font-size: 0.9em;
+  font-size: 0.95em;
 }
 
 .important-notice {
@@ -247,27 +246,27 @@ textarea {
     margin: 10px;
   }
 
-  .header-with-logo {
+  .logo-and-title {
     flex-direction: column;
     gap: 15px;
   }
 
-  .header-text {
-    text-align: center;
-    min-width: auto;
-  }
-
   .group-logo {
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 100px;
   }
 
   h1 {
-    font-size: 1.8em;
+    font-size: 2em;
+    text-align: center;
   }
 
   .festival-subtitle {
     font-size: 1em;
+  }
+
+  .event-info p {
+    font-size: 0.9em;
   }
 
   input[type="text"],
