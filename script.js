@@ -260,10 +260,8 @@ function generateNavratriRegistrationPDF(data) {
         // Remove the temporary div
         document.body.removeChild(receiptDiv);
 
-        // Show success message
-        showNavratriSuccessMessage(
-          "નવરાત્રી રજીસ્ટ્રેશન રસીદ સફળતાપૂર્વક બની ગઈ!"
-        );
+        // Show thank you page instead of success message
+        showThankYouPage(data);
       })
       .catch((error) => {
         console.error("PDF generation error:", error);
@@ -717,3 +715,175 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 100);
   });
 });
+
+// Show thank you page
+function showThankYouPage(data) {
+  // Hide the main container
+  const mainContainer = document.querySelector(".container");
+  if (mainContainer) {
+    mainContainer.style.display = "none";
+  }
+
+  // Create thank you page
+  const thankYouPage = document.createElement("div");
+  thankYouPage.id = "thankYouPage";
+  thankYouPage.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #FF6B6B, #FFE66D, #4ECDC4, #45B7D1, #FF8C42);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    font-family: 'Noto Sans Gujarati', 'Inter', sans-serif;
+    text-align: center;
+    padding: 20px;
+  `;
+
+  thankYouPage.innerHTML = `
+    <div style="background: rgba(255, 255, 255, 0.95); padding: 60px 40px; border-radius: 25px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); max-width: 600px; width: 90%; backdrop-filter: blur(10px);">
+      
+      <!-- Logo -->
+      <div style="margin-bottom: 30px;">
+        <img src="./Logo.png" alt="માં ઉમિયાં યુવા ગ્રુપ લોગો" style="width: 120px; height: 120px; border-radius: 50%; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); animation: logoFloat 3s ease-in-out infinite;" />
+      </div>
+
+      <!-- Thank you message -->
+      <h1 style="color: #2c3e50; font-size: 3em; margin: 20px 0; font-weight: bold; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+        🙏 ધન્યવાદ! 🙏
+      </h1>
+
+      <h2 style="color: #FF6B6B; font-size: 1.8em; margin: 20px 0; font-weight: 600;">
+        માં ઉમિયાં યુવા ગ્રુપ
+      </h2>
+
+      <p style="color: #666; font-size: 1.3em; margin: 20px 0; line-height: 1.6;">
+        તમારું રજીસ્ટ્રેશન સફળતાપૂર્વક પૂર્ણ થયું છે!<br>
+        રસીદ ડાઉનલોડ થઈ ગઈ છે.
+      </p>
+
+      <div style="background: linear-gradient(135deg, #4ECDC4, #45B7D1); color: white; padding: 20px; border-radius: 15px; margin: 30px 0; box-shadow: 0 8px 25px rgba(69, 183, 209, 0.3);">
+        <p style="font-size: 1.2em; margin: 0; font-weight: 600;">
+          રજીસ્ટ્રેશન નંબર: ${data.invoiceNumber}
+        </p>
+      </div>
+
+      <p style="color: #45B7D1; font-size: 1.4em; margin: 25px 0; font-style: italic; font-weight: 500;">
+        🌙 જય માતાજી! નવરાત્રીની હાર્દિક શુભકામનાઓ! 🌙
+      </p>
+
+      <!-- Action buttons -->
+      <div style="margin-top: 40px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+        <button onclick="goBackToForm()" style="
+          background: linear-gradient(135deg, #4CAF50, #45a049);
+          color: white;
+          border: none;
+          padding: 15px 30px;
+          border-radius: 25px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+          transition: all 0.3s ease;
+          font-family: 'Noto Sans Gujarati', 'Inter', sans-serif;
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 35px rgba(76, 175, 80, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(76, 175, 80, 0.3)'">
+          🔄 નવું રજીસ્ટ્રેશન
+        </button>
+        
+        <button onclick="window.print()" style="
+          background: linear-gradient(135deg, #FF8C42, #FF6B6B);
+          color: white;
+          border: none;
+          padding: 15px 30px;
+          border-radius: 25px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 8px 25px rgba(255, 140, 66, 0.3);
+          transition: all 0.3s ease;
+          font-family: 'Noto Sans Gujarati', 'Inter', sans-serif;
+        " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 35px rgba(255, 140, 66, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(255, 140, 66, 0.3)'">
+          🖨️ પ્રિન્ટ કરો
+        </button>
+      </div>
+
+      <!-- Powered by footer -->
+      <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #e1e8ed; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <p style="color: #666; font-size: 14px; margin: 0; font-weight: 500;">Powered by</p>
+        <img src="./AE.png" alt="Aexaware Infotech" style="width: 40px; height: 40px; object-fit: contain;" />
+      </div>
+    </div>
+  `;
+
+  // Add animations
+  const style = document.createElement("style");
+  style.textContent = `
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @media (max-width: 768px) {
+      #thankYouPage h1 { font-size: 2.2em !important; }
+      #thankYouPage h2 { font-size: 1.4em !important; }
+      #thankYouPage p { font-size: 1.1em !important; }
+      #thankYouPage > div { padding: 40px 20px !important; }
+      #thankYouPage button { padding: 12px 20px !important; font-size: 14px !important; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Add to body
+  document.body.appendChild(thankYouPage);
+
+  // Auto-hide after 10 seconds (optional)
+  setTimeout(() => {
+    if (document.getElementById("thankYouPage")) {
+      goBackToForm();
+    }
+  }, 15000); // 15 seconds
+}
+
+// Function to go back to the form
+function goBackToForm() {
+  // Remove thank you page
+  const thankYouPage = document.getElementById("thankYouPage");
+  if (thankYouPage) {
+    thankYouPage.remove();
+  }
+
+  // Show main container
+  const mainContainer = document.querySelector(".container");
+  if (mainContainer) {
+    mainContainer.style.display = "block";
+  }
+
+  // Reset form
+  document.getElementById("invoiceForm").reset();
+
+  // Generate new registration number
+  const newRegistrationNumber = getUniqueInvoiceNumber();
+  document.getElementById("invoiceNumber").value = newRegistrationNumber;
+
+  // Set today's date
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("registrationDate").value = today;
+
+  // Clear total amount
+  document.getElementById("totalAmount").value = "";
+
+  // Scroll to top
+  window.scrollTo(0, 0);
+}
