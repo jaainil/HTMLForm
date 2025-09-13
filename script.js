@@ -1,6 +1,16 @@
 document.getElementById("invoiceForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
+  // Check if terms and conditions are accepted
+  const termsAccepted = document.getElementById("termsAccepted").checked;
+
+  if (!termsAccepted) {
+    alert(
+      "⚠️ Please accept the terms and conditions to proceed with registration."
+    );
+    return;
+  }
+
   // Get form data
   const formData = {
     fullName: document.getElementById("fullName").value,
@@ -413,12 +423,36 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("totalPersons")
     .addEventListener("input", calculateTotalAmount);
 
+  // Handle terms and conditions checkbox
+  const termsCheckbox = document.getElementById("termsAccepted");
+  const submitButton = document.querySelector(".navratri-btn");
+
+  // Update button state based on terms acceptance
+  function updateButtonState() {
+    if (termsCheckbox.checked) {
+      submitButton.disabled = false;
+      submitButton.style.opacity = "1";
+      submitButton.style.cursor = "pointer";
+    } else {
+      submitButton.disabled = true;
+      submitButton.style.opacity = "0.6";
+      submitButton.style.cursor = "not-allowed";
+    }
+  }
+
+  // Initial button state
+  updateButtonState();
+
+  // Listen for checkbox changes
+  termsCheckbox.addEventListener("change", updateButtonState);
+
   // Generate new registration number when form is reset
   document.getElementById("invoiceForm").addEventListener("reset", function () {
     setTimeout(() => {
       const newRegistrationNumber = getUniqueInvoiceNumber();
       document.getElementById("invoiceNumber").value = newRegistrationNumber;
       document.getElementById("totalAmount").value = "";
+      updateButtonState();
     }, 100);
   });
 });
