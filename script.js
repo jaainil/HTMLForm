@@ -375,30 +375,32 @@ async function submitToNocoDB(formData) {
 async function getAllFieldIds() {
   try {
     console.log("🔍 Fetching table schema to get all field IDs...");
-    
+
     // Get table info including field details - using the correct API endpoint
     const response = await axios({
       method: "GET",
       url: `${NOCODB_CONFIG.baseUrl}/meta/tables/${NOCODB_CONFIG.tableId}`,
       headers: {
         "xc-token": NOCODB_CONFIG.apiToken,
-      }
+      },
     });
 
     console.log("📋 Table schema response:", response.data);
-    
+
     if (response.data && response.data.columns) {
       console.log("📊 All Field IDs and Names:");
-      response.data.columns.forEach(column => {
+      response.data.columns.forEach((column) => {
         console.log(`${column.title}: ${column.id}`);
       });
       return response.data.columns;
     }
-    
+
     return null;
   } catch (error) {
     console.error("❌ Error fetching field IDs:", error);
-    console.log("💡 This doesn't affect data submission - it's just for debugging field mapping");
+    console.log(
+      "💡 This doesn't affect data submission - it's just for debugging field mapping"
+    );
     return null;
   }
 }
