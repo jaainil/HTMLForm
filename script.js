@@ -112,8 +112,13 @@ function generateNavratriRegistrationPDF(data) {
 
   receiptDiv.innerHTML = `
     <div style="text-align: center; margin-bottom: 30px;">
-      <h1 style="color: #FF6B6B; font-size: 32px; margin: 0; font-weight: bold;">માં ઉમિયાં યુવા ગ્રુપ</h1>
-      <h2 style="color: #45B7D1; font-size: 24px; margin: 10px 0; font-weight: bold;">આણંદ નવરાત્રી આયોજન</h2>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
+        <img src="./Logo.png" alt="લોગો" style="width: 80px; height: 80px; border-radius: 50%;" />
+        <div>
+          <h1 style="color: #FF6B6B; font-size: 32px; margin: 0; font-weight: bold;">માં ઉમિયાં યુવા ગ્રુપ</h1>
+          <h2 style="color: #45B7D1; font-size: 24px; margin: 5px 0; font-weight: bold;">આણંદ નવરાત્રી આયોજન</h2>
+        </div>
+      </div>
       <p style="color: #666; font-size: 18px; margin: 5px 0;">27, 28/09/2025 (બે દિવસ)</p>
       <p style="color: #666; font-size: 14px; margin: 5px 0;">સંપર્ક: thechampstv9898@gmail.com | મદદ: 98250 45894</p>
       <div style="height: 3px; background: linear-gradient(90deg, #FF6B6B, #FFE66D, #4ECDC4, #45B7D1, #FF8C42); margin: 20px 0;"></div>
@@ -158,8 +163,8 @@ function generateNavratriRegistrationPDF(data) {
     </div>
 
     <div style="text-align: center; margin: 30px 0;">
-      <div style="display: inline-block; padding: 15px 30px; border: 3px solid #FF8C42; border-radius: 10px; background: #FFF8F0;">
-        <h3 style="color: #FF6B6B; font-size: 24px; margin: 0; font-weight: bold;">કુલ: ₹ ${
+      <div style="display: inline-block; padding: 20px 40px; border: 4px solid #FF8C42; border-radius: 15px; background: linear-gradient(135deg, #FFF8F0, #FFE8D6); box-shadow: 0 4px 15px rgba(255, 140, 66, 0.3);">
+        <h3 style="color: #FF6B6B; font-size: 28px; margin: 0; font-weight: bold;">કુલ રકમ: ₹ ${
           data.totalAmount
         }</h3>
       </div>
