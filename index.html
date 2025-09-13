@@ -4,66 +4,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invoice Form</title>
+  <title>🙏 Maa Umiya Yuva Group Navratri Registration 🙏</title>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+  <div class="navratri-bg">
+    <div class="diya-decoration">🪔</div>
+    <div class="diya-decoration diya-2">🪔</div>
+    <div class="diya-decoration diya-3">🪔</div>
+  </div>
+
   <div class="container">
-    <h1>Invoice Details Form</h1>
+    <div class="navratri-header">
+      <h1>🎊 Maa Umiya Yuva Group 🎊</h1>
+      <p class="festival-subtitle">આણંદ નવરાત્રી આયોજન 27,28/09/2025 (Two Days Event)</p>
+      <div class="event-info">
+        <p><strong>📧 Contact:</strong> thechampstv9898@gmail.com</p>
+        <p><strong>📞 Help:</strong> 98250 45894</p>
+      </div>
+      <div class="navratri-colors">
+        <span class="color-dot red"></span>
+        <span class="color-dot yellow"></span>
+        <span class="color-dot green"></span>
+        <span class="color-dot blue"></span>
+        <span class="color-dot orange"></span>
+      </div>
+    </div>
+
+    <div class="important-notice">
+      <h3>⚠️ Important Instructions:</h3>
+      <ul>
+        <li>• Registration is mandatory for entry</li>
+        <li>• Last date for registration: <strong>21/09/2025</strong></li>
+        <li>• Single day registration not available</li>
+        <li>• Rate: <strong>Rs. 1000 per person</strong> for 2 days</li>
+        <li>• Please enter participant count carefully</li>
+      </ul>
+    </div>
+
     <form id="invoiceForm">
       <div class="form-group">
-        <label for="fullName">Full Name:</label>
-        <input type="text" id="fullName" name="fullName" required>
+        <label for="fullName">🙏 Full Name (Surname First) *:</label>
+        <input type="text" id="fullName" name="fullName" required placeholder="e.g., Patel Rajesh">
       </div>
 
       <div class="form-group">
-        <label for="gender">Gender:</label>
-        <select id="gender" name="gender" required>
-          <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
+        <label for="phoneNumber">📞 Mobile Number *:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required placeholder="10 digit mobile number"
+          pattern="[0-9]{10}">
       </div>
 
       <div class="form-group">
-        <label for="address">Address:</label>
-        <textarea id="address" name="address" rows="3" required></textarea>
+        <label for="totalPersons">👥 Total Participants (Above 5 years) *:</label>
+        <input type="number" id="totalPersons" name="totalPersons" min="1" max="50" required
+          placeholder="Number of participants">
       </div>
 
       <div class="form-group">
-        <label for="phoneNumber">Phone Number:</label>
-        <input type="tel" id="phoneNumber" name="phoneNumber" required>
+        <label for="address">🏠 Address:</label>
+        <textarea id="address" name="address" rows="3" placeholder="Enter your complete address"></textarea>
       </div>
 
       <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <label for="email">📧 Email (Optional):</label>
+        <input type="email" id="email" name="email" placeholder="Your email address">
       </div>
 
       <div class="form-group">
-        <label for="invoiceNumber">Invoice Number:</label>
-        <input type="text" id="invoiceNumber" name="invoiceNumber" required>
+        <label for="invoiceNumber">📋 Registration Number:</label>
+        <input type="text" id="invoiceNumber" name="invoiceNumber" required readonly placeholder="Auto-generated">
       </div>
 
       <div class="form-group">
-        <label for="invoiceDate">Invoice Date:</label>
-        <input type="date" id="invoiceDate" name="invoiceDate" required>
+        <label for="registrationDate">📅 Registration Date:</label>
+        <input type="date" id="registrationDate" name="registrationDate" required readonly>
       </div>
 
       <div class="form-group">
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount" step="100" required>
+        <label for="totalAmount">💰 Total Amount (₹):</label>
+        <input type="number" id="totalAmount" name="totalAmount" readonly placeholder="Auto-calculated">
       </div>
 
       <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" rows="3"></textarea>
+        <label for="sponsorship">🎁 Sponsorship/Support (Optional):</label>
+        <textarea id="sponsorship" name="sponsorship" rows="2"
+          placeholder="Any sponsorship or support for the event"></textarea>
       </div>
 
-      <button type="submit">Generate Invoice PDF</button>
+      <button type="submit" class="navratri-btn">
+        <span class="btn-text">🎉 Generate Registration Receipt 🎉</span>
+      </button>
     </form>
+
+    <div class="navratri-footer">
+      <p>🌙 Jai Mataji! Navratri ni Hardik Shubhkamnaao! 🌙</p>
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

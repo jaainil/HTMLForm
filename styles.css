@@ -5,42 +5,243 @@
 }
 
 body {
-  font-family: "Arial", sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(
+    135deg,
+    #ff6b6b 0%,
+    #ffe66d 25%,
+    #4ecdc4 50%,
+    #45b7d1 75%,
+    #ff8c42 100%
+  );
+  background-size: 400% 400%;
+  animation: navratriGradient 8s ease infinite;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+  background-attachment: fixed;
+  padding: 20px 0;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@keyframes navratriGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.navratri-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.diya-decoration {
+  position: absolute;
+  font-size: 2rem;
+  animation: diyaGlow 2s ease-in-out infinite alternate;
+}
+
+.diya-2 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0.5s;
+}
+
+.diya-3 {
+  top: 70%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+@keyframes diyaGlow {
+  from {
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffa500, 0 0 30px #ff8c00;
+    transform: scale(1);
+  }
+  to {
+    text-shadow: 0 0 20px #ffd700, 0 0 30px #ffa500, 0 0 40px #ff8c00;
+    transform: scale(1.1);
+  }
 }
 
 .container {
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
   padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 600px;
+  position: relative;
+  z-index: 2;
+  border: 3px solid transparent;
+  background-image: linear-gradient(white, white),
+    linear-gradient(45deg, #ff6b6b, #ffe66d, #4ecdc4, #45b7d1, #ff8c42);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  margin: 20px auto;
+}
+
+.navratri-header {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 h1 {
-  text-align: center;
   color: #333;
+  margin-bottom: 10px;
+  font-size: 2.8em;
+  font-weight: 700;
+  background: linear-gradient(
+    45deg,
+    #ff6b6b,
+    #ffe66d,
+    #4ecdc4,
+    #45b7d1,
+    #ff8c42
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: colorShift 3s ease-in-out infinite;
+}
+
+@keyframes colorShift {
+  0%,
+  100% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(180deg);
+  }
+}
+
+.festival-subtitle {
+  color: #666;
+  font-size: 1.1em;
+  margin-bottom: 15px;
+  font-weight: 400;
+}
+
+.event-info {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.event-info p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 0.9em;
+}
+
+.important-notice {
+  background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+  border: 2px solid #ff8c42;
+  border-radius: 12px;
+  padding: 20px;
   margin-bottom: 30px;
-  font-size: 2.5em;
-  font-weight: 300;
+  box-shadow: 0 4px 15px rgba(255, 140, 66, 0.2);
+}
+
+.important-notice h3 {
+  color: #d63031;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.important-notice ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.important-notice li {
+  margin: 8px 0;
+  color: #2d3436;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.important-notice strong {
+  color: #d63031;
+}
+
+.navratri-colors {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  animation: bounce 2s infinite;
+}
+
+.color-dot.red {
+  background-color: #ff6b6b;
+  animation-delay: 0s;
+}
+.color-dot.yellow {
+  background-color: #ffe66d;
+  animation-delay: 0.2s;
+}
+.color-dot.green {
+  background-color: #4ecdc4;
+  animation-delay: 0.4s;
+}
+.color-dot.blue {
+  background-color: #45b7d1;
+  animation-delay: 0.6s;
+}
+.color-dot.orange {
+  background-color: #ff8c42;
+  animation-delay: 0.8s;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 label {
   display: block;
-  margin-bottom: 8px;
-  color: #555;
-  font-weight: 500;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 600;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 input[type="text"],
@@ -51,12 +252,13 @@ input[type="number"],
 select,
 textarea {
   width: 100%;
-  padding: 12px 15px;
+  padding: 15px 20px;
   border: 2px solid #e1e1e1;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 16px;
   transition: all 0.3s ease;
   background-color: #f9f9f9;
+  font-family: "Poppins", sans-serif;
 }
 
 input[type="text"]:focus,
@@ -67,9 +269,10 @@ input[type="number"]:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #ff6b6b;
   background-color: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+  transform: translateY(-2px);
 }
 
 textarea {
@@ -77,37 +280,82 @@ textarea {
   min-height: 80px;
 }
 
-button {
+.navratri-btn {
   width: 100%;
-  padding: 15px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 18px;
+  background: linear-gradient(
+    45deg,
+    #ff6b6b,
+    #ffe66d,
+    #4ecdc4,
+    #45b7d1,
+    #ff8c42
+  );
+  background-size: 300% 300%;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 15px;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 10px;
+  margin-top: 20px;
+  animation: gradientShift 3s ease infinite;
+  position: relative;
+  overflow: hidden;
 }
 
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-button:active {
-  transform: translateY(0);
+.navratri-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+}
+
+.navratri-btn:active {
+  transform: translateY(-1px);
+}
+
+.btn-text {
+  position: relative;
+  z-index: 1;
+}
+
+.navratri-footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #f0f0f0;
+}
+
+.navratri-footer p {
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 20px;
+    padding: 25px;
     margin: 10px;
   }
 
   h1 {
-    font-size: 2em;
+    font-size: 2.2em;
+  }
+
+  .festival-subtitle {
+    font-size: 1em;
   }
 
   input[type="text"],
@@ -118,11 +366,15 @@ button:active {
   select,
   textarea {
     font-size: 14px;
-    padding: 10px 12px;
+    padding: 12px 15px;
   }
 
-  button {
+  .navratri-btn {
     font-size: 16px;
-    padding: 12px;
+    padding: 15px;
+  }
+
+  .diya-decoration {
+    font-size: 1.5rem;
   }
 }
