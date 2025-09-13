@@ -300,9 +300,27 @@ async function submitToNocoDB(formData) {
       c2w0421697ohkv6: parseInt(formData.totalAmount), // Total Amount
     };
 
-    // Add registration number if you have a field for it
-    // You'll need to provide the field ID for registration number
-    // nocoData["REGISTRATION_NUMBER_FIELD_ID"] = formData.invoiceNumber;
+    // Try to get all field IDs to find the registration number field
+    const fields = await getAllFieldIds();
+    if (fields) {
+      // Look for a registration number field
+      const regField = fields.find(
+        (field) =>
+          field.title.toLowerCase().includes("registration") ||
+          field.title.toLowerCase().includes("invoice") ||
+          field.title.toLowerCase().includes("number") ||
+          field.title.toLowerCase().includes("reg")
+      );
+
+      if (regField) {
+        console.log(
+          `📋 Found registration field: ${regField.title} (ID: ${regField.id})`
+        );
+        nocoData[regField.id] = formData.invoiceNumber;
+      } else {
+        console.log("⚠️ Registration number field not found in table schema");
+      }
+    }
 
     console.log("📤 ફિલ્ડ ID સાથે NocoDB પર મોકલી રહ્યા છીએ:", nocoData);
     console.log(
@@ -393,9 +411,50 @@ async function getAllFieldIds() {
 
     if (response.data && response.data.columns) {
       console.log("📊 બધા ફિલ્ડ ID અને નામો:");
+      console.log("=".repeat(50));
       response.data.columns.forEach((column) => {
-        console.log(`${column.title}: ${column.id}`);
+        console.log(`📌 ${column.title}: ${column.id} (Type: ${column.uidt})`);
       });
+      console.log("=".repeat(50));
+
+      // Show current field mapping
+      console.log("🗺️ Current Field Mapping:");
+      console.log(
+        "Full Name (c05eqcynx057p0w):",
+        response.data.columns.find((c) => c.id === "c05eqcynx057p0w")?.title ||
+          "NOT FOUND"
+      );
+      console.log(
+        "Phone Number (c930pe5xqlmciqi):",
+        response.data.columns.find((c) => c.id === "c930pe5xqlmciqi")?.title ||
+          "NOT FOUND"
+      );
+      console.log(
+        "Total Participants (c2oz9pyj7hjrwzv):",
+        response.data.columns.find((c) => c.id === "c2oz9pyj7hjrwzv")?.title ||
+          "NOT FOUND"
+      );
+      console.log(
+        "Address (coivwzyss4r41y5):",
+        response.data.columns.find((c) => c.id === "coivwzyss4r41y5")?.title ||
+          "NOT FOUND"
+      );
+      console.log(
+        "Email (cge82jeezj4fkd0):",
+        response.data.columns.find((c) => c.id === "cge82jeezj4fkd0")?.title ||
+          "NOT FOUND"
+      );
+      console.log(
+        "Registration Date (cuyo9tcmslimp4i):",
+        response.data.columns.find((c) => c.id === "cuyo9tcmslimp4i")?.title ||
+          "NOT FOUND"
+      );
+      console.log(
+        "Total Amount (c2w0421697ohkv6):",
+        response.data.columns.find((c) => c.id === "c2w0421697ohkv6")?.title ||
+          "NOT FOUND"
+      );
+
       return response.data.columns;
     }
 
