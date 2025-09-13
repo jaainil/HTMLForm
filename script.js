@@ -18,6 +18,9 @@ document
       '<span class="btn-text">🔄 રજીસ્ટ્રેશન પ્રક્રિયા ચાલુ છે...</span>';
     submitButton.disabled = true;
 
+    // Ensure total amount is calculated before getting form data
+    calculateTotalAmount();
+
     // Get form data
     const formData = {
       fullName: document.getElementById("fullName").value,
@@ -29,6 +32,10 @@ document
       registrationDate: document.getElementById("registrationDate").value,
       totalAmount: document.getElementById("totalAmount").value,
     };
+
+    // Debug: Log the form data to console
+    console.log("📋 Form data being submitted:", formData);
+    console.log("💰 Total amount:", formData.totalAmount);
 
     try {
       // Test NocoDB connection first
@@ -83,11 +90,26 @@ document
 
 // Calculate total amount based on number of persons
 function calculateTotalAmount() {
-  const totalPersons =
-    parseInt(document.getElementById("totalPersons").value) || 0;
+  const totalPersonsElement = document.getElementById("totalPersons");
+  const totalAmountElement = document.getElementById("totalAmount");
+
+  if (!totalPersonsElement || !totalAmountElement) {
+    console.error("Required form elements not found");
+    return;
+  }
+
+  const totalPersons = parseInt(totalPersonsElement.value) || 0;
   const amountPerPerson = 1000; // ₹ 1000 પ્રતિ વ્યક્તિ (2 દિવસ માટે)
   const totalAmount = totalPersons * amountPerPerson;
-  document.getElementById("totalAmount").value = totalAmount;
+
+  totalAmountElement.value = totalAmount;
+
+  // Debug log
+  console.log(
+    `💰 Calculated: ${totalPersons} persons × ₹${amountPerPerson} = ₹${totalAmount}`
+  );
+
+  return totalAmount;
 }
 
 // Add event listener for total persons input
@@ -96,6 +118,11 @@ document
   .addEventListener("input", calculateTotalAmount);
 
 function generateNavratriRegistrationPDF(data) {
+  // Debug: Log the data being passed to PDF generation
+  console.log("🔍 PDF Generation - Data received:", data);
+  console.log("💰 PDF Generation - Total amount:", data.totalAmount);
+  console.log("👥 PDF Generation - Total persons:", data.totalPersons);
+
   // Create a hidden div with the receipt content
   const receiptDiv = document.createElement("div");
   receiptDiv.style.cssText = `
@@ -159,14 +186,9 @@ function generateNavratriRegistrationPDF(data) {
         }</p>
         <p style="margin: 8px 0; font-size: 16px;"><strong>દર:</strong> ₹ 1000 પ્રતિ વ્યક્તિ</p>
         <p style="margin: 8px 0; font-size: 16px;">(2 દિવસના કાર્યક્રમ માટે)</p>
-      </div>
-    </div>
-
-    <div style="text-align: center; margin: 30px 0;">
-      <div style="display: inline-block; padding: 20px 40px; border: 4px solid #FF8C42; border-radius: 15px; background: linear-gradient(135deg, #FFF8F0, #FFE8D6); box-shadow: 0 4px 15px rgba(255, 140, 66, 0.3);">
-        <h3 style="color: #FF6B6B; font-size: 28px; margin: 0; font-weight: bold;">કુલ રકમ: ₹ ${
-          data.totalAmount
-        }</h3>
+        <p style="margin: 8px 0; font-size: 18px; color: #FF6B6B;"><strong>કુલ રકમ:</strong> ₹ ${parseInt(
+          data.totalAmount || 0
+        ).toLocaleString("en-IN")}</p>
       </div>
     </div>
 
@@ -575,6 +597,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Generate unique registration number
   const registrationNumber = getUniqueInvoiceNumber();
   document.getElementById("invoiceNumber").value = registrationNumber;
+
+  // Calculate initial total amount (in case user has a default value)
+  calculateTotalAmount();
 
   // Test NocoDB connection on page load
   console.log("🚀 પેજ લોડ થયું, NocoDB કનેક્શન ચકાસી રહ્યા છીએ...");
